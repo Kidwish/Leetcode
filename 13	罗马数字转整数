@@ -1,0 +1,16 @@
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        dictLM = {'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}
+        output = 0
+        i=0
+        while i < len(s):
+            if i < len(s)-1:
+                if dictLM[s[i]] < dictLM[s[i+1]]:
+                    output += dictLM[s[i+1]]-dictLM[s[i]]
+                    i += 1
+                else:
+                    output += dictLM[s[i]]
+            else:
+                output += dictLM[s[i]]
+            i += 1
+        return output
