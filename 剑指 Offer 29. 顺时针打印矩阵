@@ -1,0 +1,44 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        if matrix==[]:
+            return []
+        upLmt=1
+        dnLmt=len(matrix)-1
+        ltLmt=0
+        rtLmt=len(matrix[0])-1
+        cntRow=0
+        cntClm=0
+        out=[]
+        move='rt'
+        while 1:
+            out.append(matrix[cntRow][cntClm])
+            if move == 'rt' and cntClm == rtLmt:
+                move = 'dn'
+                rtLmt -= 1
+                if upLmt>dnLmt:
+                    break
+            if move == 'dn' and cntRow == dnLmt:
+                move = 'lt'
+                dnLmt -= 1
+                if rtLmt<ltLmt:
+                    break
+            if move == 'lt' and cntClm == ltLmt:
+                move = 'up'
+                ltLmt += 1
+                if upLmt>dnLmt:
+                    break
+            if move == 'up' and cntRow == upLmt:
+                move = 'rt'
+                upLmt += 1
+                if rtLmt<ltLmt:
+                    break
+
+            if move == 'rt':
+                cntClm += 1
+            if move == 'lt':
+                cntClm -=1
+            if move == 'up':
+                cntRow -= 1
+            if move == 'dn':
+                cntRow += 1
+        return out
