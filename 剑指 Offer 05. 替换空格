@@ -1,0 +1,9 @@
+class Solution:
+    def replaceSpace(self, s: str) -> str:
+        out = ''
+        for i in s:
+            if i == ' ':
+                out += '%20'
+            else:
+                out += i
+        return out
