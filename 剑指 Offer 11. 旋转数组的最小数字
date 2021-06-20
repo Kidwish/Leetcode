@@ -1,0 +1,31 @@
+class Solution:
+    def minArray(self, numbers: List[int]) -> int:
+        if len(numbers)==0:
+            return []
+        if len(numbers)==1:
+            return numbers[0]
+        if len(numbers)==2:
+            if numbers[0]<=numbers[1]:
+                return numbers[0]
+            else:
+                return numbers[1]
+        low = 0
+        high = len(numbers)-1
+        while low!=high-1 and low!=high:
+            half = (low + high) // 2
+            if numbers[low]>numbers[half] and numbers[high]>=numbers[half]:
+                high=half
+                continue
+            if numbers[low]<=numbers[half] and numbers[high]<numbers[half]:
+                low=half
+                continue
+            if numbers[low]==numbers[half] and numbers[high]==numbers[half]:
+                low+=1
+                high-=1
+                continue
+            if numbers[low]<=numbers[half] and numbers[high]>=numbers[half]:
+                return numbers[low]
+        if numbers[low]<=numbers[high]:
+            return numbers[low]
+        else:
+            return numbers[high]
