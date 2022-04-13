@@ -1,0 +1,83 @@
+typedef struct {
+    int val;
+    struct ListNode *next;
+} ListNode;
+
+typedef struct {
+    ListNode *head;
+    int size;
+} RandomizedSet;
+
+RandomizedSet* randomizedSetCreate() {
+    RandomizedSet *rs = (RandomizedSet *)malloc(sizeof(RandomizedSet));
+    rs->head = NULL;
+    rs->size = 0;
+    return rs;
+}
+
+bool randomizedSetInsert(RandomizedSet* obj, int val) {
+    ListNode *p = obj->head;
+    if (!obj->head) {
+        obj->head = (ListNode *)malloc(sizeof(ListNode));
+        obj->head->val = val;
+        obj->head->next = NULL;
+        obj->size += 1;
+        return true;
+    }
+    while (p){
+        if (p->val == val) return false;
+        p = p->next;
+    }
+    p = (ListNode *)malloc(sizeof(ListNode));
+    p->val = val;
+    p->next = NULL;
+    obj->head->next = p;
+    obj->size += 1;
+    return true;
+}
+
+bool randomizedSetRemove(RandomizedSet* obj, int val) {
+    ListNode *p = obj->head;
+    if (!p) return false;
+    if (p->val != val) return false;
+    else {
+        obj->head = obj->head->next;
+        obj->size -= 1;
+    }
+    while (p->next){
+        if (p->next->val == val) {
+            p->next = p->next->next;
+            obj->size -=1;
+            return true;
+        }
+    }
+    return false;
+}
+
+int randomizedSetGetRandom(RandomizedSet* obj) {
+    int loc;
+    ListNode *p = obj->head;
+    srand(time(0));
+    loc = rand() % (obj->size);
+    while (loc) {
+        p = p->next;
+        --loc;
+    }
+    return p->val;
+}
+
+void randomizedSetFree(RandomizedSet* obj) {
+
+}
+
+/**
+ * Your RandomizedSet struct will be instantiated and called as such:
+ * RandomizedSet* obj = randomizedSetCreate();
+ * bool param_1 = randomizedSetInsert(obj, val);
+ 
+ * bool param_2 = randomizedSetRemove(obj, val);
+ 
+ * int param_3 = randomizedSetGetRandom(obj);
+ 
+ * randomizedSetFree(obj);
+*/
